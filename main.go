@@ -11,12 +11,9 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func getProdList() {
+func getProdList(user, id, page string) {
 
 	ajax := "https://www.tokopedia.com/ajax/shop/shop.pl"
-	user := "rahmataligos"
-	id := "138023"
-	page := "1"
 	max := "80"
 	res, err := http.Get(ajax + "?u=/" + user + "/page/" +
 		page + "&a=reload_data&action=reload_data&qs=perpage%3D" +
@@ -53,5 +50,10 @@ func getProdList() {
 }
 
 func main() {
-	getProdList()
+
+	user := "rahmataligos"
+	id := "138023"
+	page := "1"
+	getProdList(user, id, page)
+
 }
