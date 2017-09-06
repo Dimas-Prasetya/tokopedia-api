@@ -11,6 +11,33 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+func getShopData(user string) (id string, gold bool) {
+
+	username := strings.ToLower(user)
+	url := "https://www.tokopedia.com/" + username
+	doc, err := goquery.NewDocument(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	doc.Find("h1").Each(func(i int, s *goquery.Selection) {
+
+		_, ok := s.Attr("class")
+		gold = ok
+
+	})
+
+	doc.Find(`input[name="shop_id"]`).Each(func(i int, s *goquery.Selection) {
+
+		shopid, _ := s.Attr("value")
+		id = shopid
+
+	})
+
+	return
+
+}
+
 func getProdList(user, id, page string) {
 
 	ajax := "https://www.tokopedia.com/ajax/shop/shop.pl"
@@ -52,8 +79,8 @@ func getProdList(user, id, page string) {
 func main() {
 
 	user := "rahmataligos"
-	id := "138023"
 	page := "1"
+	id, _ := getShopData(user)
 	getProdList(user, id, page)
 
 }
