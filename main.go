@@ -13,7 +13,14 @@ import (
 
 func getProdList() {
 
-	res, err := http.Get("https://www.tokopedia.com/ajax/shop/shop.pl?u=/rahmataligos/page/1&a=reload_data&action=reload_data&qs=perpage%3D80&uri_path=%2Fibishop%2Fpage%2F1&s_id=138023")
+	ajax := "https://www.tokopedia.com/ajax/shop/shop.pl"
+	user := "rahmataligos"
+	id := "138023"
+	page := "1"
+	max := "80"
+	res, err := http.Get(ajax + "?u=/" + user + "/page/" +
+		page + "&a=reload_data&action=reload_data&qs=perpage%3D" +
+		max + "&uri_path=%2Fibishop%2Fpage%2F" + page + "&s_id=" + id)
 	if err != nil {
 		log.Fatal(err)
 	}
