@@ -39,7 +39,7 @@ func getProdList() {
 		prodlink, _ := s.Find("a").First().Attr("href")
 		prodthumb, _ := s.Find(".product-image img").Attr("src")
 
-		fmt.Printf("Product %d: %s - %s - %v\n", i, prodname, prodlink, prodthumb)
+		fmt.Printf("Product %d:\n * %s\n * %s\n * %s\n", i, prodname, prodlink, prodthumb)
 
 	})
 
