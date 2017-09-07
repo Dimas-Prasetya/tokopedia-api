@@ -38,7 +38,7 @@ func getShopData(user string) (id string, gold bool) {
 
 }
 
-func getProdLink(user, id, page string) (name, price, link, thumb []string) {
+func getProdList(user, id, page string) (name, price, link, thumb []string) {
 
 	ajax := "https://www.tokopedia.com/ajax/shop/shop.pl"
 	max := "80"
@@ -102,7 +102,7 @@ func main() {
 	user := "idealmuslimshop"
 	page := "1"
 	id, _ := getShopData(user)
-	name, _, _, _ := getProdLink(user, id, page)
+	name, _, _, _ := getProdList(user, id, page)
 	fmt.Println(name[0])
 
 }
