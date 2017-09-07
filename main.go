@@ -38,7 +38,7 @@ func getShopData(user string) (id string, gold bool) {
 
 }
 
-func getProdList(user, id, page string) {
+func getProdLink(user, id, page string) (name, price, link, thumb []string) {
 
 	ajax := "https://www.tokopedia.com/ajax/shop/shop.pl"
 	max := "80"
@@ -67,20 +67,42 @@ func getProdList(user, id, page string) {
 	doc.Find(".product").Each(func(i int, s *goquery.Selection) {
 
 		prodname := s.Find("div[class=meta-product] b").Text()
+		prodprice := s.Find(".price").Text()
 		prodlink, _ := s.Find("a").First().Attr("href")
 		prodthumb, _ := s.Find(".product-image img").Attr("src")
-
-		fmt.Printf("Product %d:\n * %s\n * %s\n * %s\n", i, prodname, prodlink, prodthumb)
+		name = append(name, prodname)
+		price = append(price, prodprice)
+		link = append(link, prodlink)
+		thumb = append(thumb, prodthumb)
 
 	})
+
+	return
+
+}
+
+func getProdDetail(url string) (desc string) {
+
+	doc, err := goquery.NewDocument(url)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	doc.Find(".tab-content").Each(func(i int, s *goquery.Selection) {
+		proddesc := s.Find("p[itemprop=description]").Text()
+		desc = proddesc
+	})
+
+	return
 
 }
 
 func main() {
 
-	user := "rahmataligos"
+	user := "idealmuslimshop"
 	page := "1"
 	id, _ := getShopData(user)
-	getProdList(user, id, page)
+	name, _, _, _ := getProdLink(user, id, page)
+	fmt.Println(name[0])
 
 }
