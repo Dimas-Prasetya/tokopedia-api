@@ -38,7 +38,7 @@ func getShopData(user string) (id string, gold bool) {
 
 }
 
-func getProdList(user, id, page string) (name, price, link, thumb []string) {
+func getProdList(user, id, page string) (name, desc, price, link, thumb []string) {
 
 	ajax := "https://www.tokopedia.com/ajax/shop/shop.pl"
 	max := "80"
@@ -70,7 +70,9 @@ func getProdList(user, id, page string) (name, price, link, thumb []string) {
 		prodprice := s.Find(".price").Text()
 		prodlink, _ := s.Find("a").First().Attr("href")
 		prodthumb, _ := s.Find(".product-image img").Attr("src")
+		proddesc := getProdDetail(prodlink)
 		name = append(name, prodname)
+		desc = append(desc, proddesc)
 		price = append(price, prodprice)
 		link = append(link, prodlink)
 		thumb = append(thumb, prodthumb)
@@ -103,11 +105,11 @@ func getProdDetail(url string) (description string) {
 
 func main() {
 
-	user := "idealmuslimshop"
+	user := "rahmataligos"
 	page := "1"
 	id, _ := getShopData(user)
-	_, _, link, _ := getProdList(user, id, page)
-	desc := getProdDetail(link[0])
-	fmt.Println(desc)
+	_, desc, _, _, _ := getProdList(user, id, page)
+
+	fmt.Println(desc[0])
 
 }
