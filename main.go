@@ -81,7 +81,7 @@ func getProdList(user, id, page string) (name, price, link, thumb []string) {
 
 }
 
-func getProdDetail(url string) (desc string) {
+func getProdDetail(url string) (description string) {
 
 	doc, err := goquery.NewDocument(url)
 	if err != nil {
@@ -89,8 +89,12 @@ func getProdDetail(url string) (desc string) {
 	}
 
 	doc.Find(".tab-content").Each(func(i int, s *goquery.Selection) {
-		proddesc := s.Find("p[itemprop=description]").Text()
-		desc = proddesc
+
+		proddesc := s.Find("p[itemprop=description]").First().Text()
+		if proddesc != "" {
+			description = proddesc
+		}
+
 	})
 
 	return
