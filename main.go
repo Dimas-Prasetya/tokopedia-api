@@ -102,7 +102,8 @@ func main() {
 	user := "idealmuslimshop"
 	page := "1"
 	id, _ := getShopData(user)
-	name, _, _, _ := getProdList(user, id, page)
-	fmt.Println(name[0])
+	_, _, link, _ := getProdList(user, id, page)
+	desc := getProdDetail(link[0])
+	fmt.Println(desc)
 
 }
